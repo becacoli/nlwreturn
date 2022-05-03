@@ -1,5 +1,7 @@
+/* GERAL */
 * {
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -8,7 +10,17 @@
   --headline: hsl(210, 11%, 15%);
   --paragraph: hsl(210, 9%, 31%);
 
+  --brand-beige: hsl(39, 100%, 97%);
+  --brand-light: hsl(148, 23%, 89%);
+
+  --nav-right: 7.2rem; /* navegagação */
   font-size: 62.5%; /* 1rem = 10px */
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
 }
 
 body {
@@ -16,22 +28,47 @@ body {
   font-size: 1.6rem;
 
   text-align: center;
+
+  /* usando overlay no overflow ele não contará a parte do scroll como parte da tela*/
+  overflow: overlay;
 }
 
-header {
+/*classe feita para ser usada no html */
+.wrapper {
   width: 37.5rem;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 4.1rem;
+  margin-inline: auto;
+  padding-inline: 2.4rem;
 }
 
-h4 {
+ul {
+  list-style: none; /* tirando os pontinhos dos tópicos inicio, serviços e sobre*/
+}
+
+/* HEADER */
+header {
+  margin-top: calc(4.1rem + var(--nav-right));
+}
+
+header::before {
+  content: '';
+  width: 100%;
+  height: calc(108rem + var(--nav-right));
+  background-color: var(--brand-light);
+  display: block;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1; /* jogando a box para o eixo z, tridimensional*/
+}
+
+header h4 {
   font-size: 1.4rem;
   color: var(--primary-color);
   margin-bottom: 1.6rem;
 }
 
-h1 {
+header h1 {
   font-size: 3.4rem;
   color: var(--headline);
   line-height: 130%;
@@ -39,7 +76,7 @@ h1 {
   margin-bottom: 2.4rem;
 }
 
-p {
+header p {
   font-size: 1.8rem;
   line-height: 150%;
   font-weight: 400;
@@ -48,7 +85,7 @@ p {
   margin-bottom: 3.2rem;
 }
 
-button {
+header button {
   background: var(--primary-color);
 
   border: none;
@@ -71,4 +108,186 @@ button {
 
   margin-right: auto;
   margin-left: auto;
+}
+
+header img {
+  width: 26.4rem;
+  display: block;
+  margin-inline: auto;
+  object-position: 0 2rem;
+}
+
+.stats {
+  width: 32.7rem;
+  padding-block: 4rem;
+  margin-inline: auto; /* eixo x que envolve a margem direita e esquerda */
+
+  background-color: var(--brand-beige);
+  border: 1px solid var(--brand-light);
+
+  display: flex; /*coloca as caixas uma ao lado da outra (linha), mas podemos mudar a direção do display*/
+  flex-direction: column;
+  justify-content: center;
+  gap: 6rem; /* separação entre os elementos */
+}
+
+.stat h3 {
+  font-size: 4.8rem;
+  color: var(--headline);
+  line-height: 130%;
+
+  margin-bottom: 0.4rem;
+}
+.stat p {
+  margin: 0;
+
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  line-height: 150%;
+}
+
+/* NAVIGATION */
+
+nav {
+  display: flex;
+
+  /*padding-inline: 2.4rem;
+  padding-block: 1.6rem; é igual a padding: 1.6rem 2.4rem;
+  Nesse caso, foi usado um calculo para formar o padding pela margem*/
+
+  height: var(--nav-right);
+
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+nav .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav.scroll {
+  background: var(--primary-color);
+  width: 100vw;
+}
+
+nav.scroll svg:nth-child(1) path {
+  /* COR DA LOGO*/
+  fill: white;
+}
+
+nav.scroll button path {
+  /* COR DAS TRES LINHAS*/
+  stroke: white;
+}
+
+/* retirando a estilização do button close menu*/
+nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* MENU-EXPANDED */
+
+/* o overflow fará com que nao tenha como dar scroll na tela*/
+body.menu-expanded {
+  overflow: hidden;
+}
+
+/* isso significa: para todos do primeiro nível exceto, então o que não pertencer a nav sumirá*/
+body.menu-expanded > :not(nav) {
+  display: none;
+}
+
+.menu,
+.close-menu,
+body.menu-expanded .open-menu {
+  opacity: 0;
+  visibility: hidden;
+}
+
+body.menu-expanded .menu,
+body.menu-expanded .close-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+body.menu-expanded .menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--primary-color);
+
+  width: 100vw;
+  height: 100vh;
+
+  padding-top: var(--nav-right);
+}
+
+body.menu-expanded nav {
+  position: relative;
+}
+
+.menu ul:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  gap: 4.8rem;
+
+  margin-top: 6rem;
+
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 3.1rem;
+}
+
+/* temos que especificar onde os tópicos estão de fato para mudar a cor do texto e tirar a decoração dele*/
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.menu .button {
+   background: #FFFFFF ;
+   border-radius: 40px;
+   font-weight: 700;
+   font-size: 18px;
+   line-height: 23px;
+   text-transform: uppercase;
+   text-decoration: none;
+
+   color: var(--primary-color);
+
+   display: inline-block;
+   padding: 16px 32px;
+
+   margin-top: 4.8rem;
+   margin-bottom: 8rem;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3.2rem;
+}
+
+body.menu-expanded .logo,
+body.menu-expanded button {
+  position: relative;
+  z-index: 100;
+}
+
+body.menu-expanded .logo path {
+  /* COR DA LOGO*/
+  fill: white;
+}
+
+body.menu-expanded button path {
+  /* COR DAS TRES LINHAS*/
+  stroke: white;
 }
