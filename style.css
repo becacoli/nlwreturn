@@ -13,8 +13,16 @@
   --brand-beige: hsl(39, 100%, 97%);
   --brand-light: hsl(148, 23%, 89%);
 
-  --nav-right: 7.2rem; /* navegagação */
+  --bg-light: hsl(148, 23%, 89%);
+  
   font-size: 62.5%; /* 1rem = 10px */
+
+  --nav-right: 7.2rem; /* navegagação */
+}
+
+/* deixando a rolagem mais suave*/
+html{
+  scroll-behavior: smooth;
 }
 
 html,
@@ -31,6 +39,7 @@ body {
 
   /* usando overlay no overflow ele não contará a parte do scroll como parte da tela*/
   overflow: overlay;
+  background-color: var(--bg-light);
 }
 
 /*classe feita para ser usada no html */
@@ -44,12 +53,98 @@ ul {
   list-style: none; /* tirando os pontinhos dos tópicos inicio, serviços e sobre*/
 }
 
-/* HEADER */
-header {
-  margin-top: calc(4.1rem + var(--nav-right));
+section {
+  padding-block: 10rem;
 }
 
-header::before {
+section header h4{ 
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 150%;
+  letter-spacing: 00.08rem;
+  color: var(--primary-color);
+
+  text-transform: uppercase;
+
+  margin-bottom: 1.6rem;
+}
+
+section header h2{
+
+  font-size: 3rem;
+  line-height: 3.9rem;
+}
+
+section header h1{
+  font-size: 3.4rem;
+  color: var(--headline);
+  line-height: 130%;
+
+  margin-bottom: 2.4rem;
+}
+
+section .content p{
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 150%;
+
+  color: var(--paragraph);
+}
+
+
+/* NAVIGATION */
+
+nav {
+  display: flex;
+
+  /*padding-inline: 2.4rem;
+  padding-block: 1.6rem; é igual a padding: 1.6rem 2.4rem;
+  Nesse caso, foi usado um calculo para formar o padding pela margem*/
+
+  height: var(--nav-right);
+
+  position: fixed;
+  top: 0;
+  width: 100vw;
+
+  z-index: 100;
+}
+
+nav .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+nav.scroll {
+  background: var(--primary-color);
+
+}
+
+nav.scroll .logo path {
+  /* COR DA LOGO*/
+  fill: white;
+}
+
+nav.scroll button path {
+  /* COR DAS TRES LINHAS*/
+  stroke: white;
+}
+
+/* retirando a estilização do button close menu*/
+nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+/* HEADER FOI MUDADO PARA HOME */
+#home {
+  /* é padding-top ao invés margin-top pq era o preenchimento*/
+  padding-top: calc(4.1rem + var(--nav-right));
+}
+
+#home::before {
   content: '';
   width: 100%;
   height: calc(108rem + var(--nav-right));
@@ -62,21 +157,7 @@ header::before {
   z-index: -1; /* jogando a box para o eixo z, tridimensional*/
 }
 
-header h4 {
-  font-size: 1.4rem;
-  color: var(--primary-color);
-  margin-bottom: 1.6rem;
-}
-
-header h1 {
-  font-size: 3.4rem;
-  color: var(--headline);
-  line-height: 130%;
-
-  margin-bottom: 2.4rem;
-}
-
-header p {
+#home p {
   font-size: 1.8rem;
   line-height: 150%;
   font-weight: 400;
@@ -85,7 +166,7 @@ header p {
   margin-bottom: 3.2rem;
 }
 
-header button {
+#home button {
   background: var(--primary-color);
 
   border: none;
@@ -110,14 +191,14 @@ header button {
   margin-left: auto;
 }
 
-header img {
+#home img {
   width: 26.4rem;
   display: block;
   margin-inline: auto;
   object-position: 0 2rem;
 }
 
-.stats {
+#home .stats {
   width: 32.7rem;
   padding-block: 4rem;
   margin-inline: auto; /* eixo x que envolve a margem direita e esquerda */
@@ -131,63 +212,19 @@ header img {
   gap: 6rem; /* separação entre os elementos */
 }
 
-.stat h3 {
+#home .stat h3 {
   font-size: 4.8rem;
   color: var(--headline);
   line-height: 130%;
 
   margin-bottom: 0.4rem;
 }
-.stat p {
+#home .stat p {
   margin: 0;
 
   color: var(--primary-color);
   font-size: 1.6rem;
   line-height: 150%;
-}
-
-/* NAVIGATION */
-
-nav {
-  display: flex;
-
-  /*padding-inline: 2.4rem;
-  padding-block: 1.6rem; é igual a padding: 1.6rem 2.4rem;
-  Nesse caso, foi usado um calculo para formar o padding pela margem*/
-
-  height: var(--nav-right);
-
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-nav .wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-nav.scroll {
-  background: var(--primary-color);
-  width: 100vw;
-}
-
-nav.scroll svg:nth-child(1) path {
-  /* COR DA LOGO*/
-  fill: white;
-}
-
-nav.scroll button path {
-  /* COR DAS TRES LINHAS*/
-  stroke: white;
-}
-
-/* retirando a estilização do button close menu*/
-nav button {
-  background: none;
-  border: none;
-  cursor: pointer;
 }
 
 /* MENU-EXPANDED */
@@ -199,7 +236,7 @@ body.menu-expanded {
 
 /* isso significa: para todos do primeiro nível exceto, então o que não pertencer a nav sumirá*/
 body.menu-expanded > :not(nav) {
-  display: none;
+  visibility: hidden;
 }
 
 .menu,
@@ -215,6 +252,10 @@ body.menu-expanded .close-menu {
   visibility: visible;
 }
 
+.menu {
+   /* TRANSIÇÃO DO MENU (fazendo ele ir de baixo pra cima) */
+  transform: translateY(100%);
+}
 
 body.menu-expanded .menu {
   position: fixed;
@@ -226,11 +267,12 @@ body.menu-expanded .menu {
   height: 100vh;
 
   padding-top: var(--nav-right);
+
+  /* TRANSIÇÃO DO MENU */
+  transition: transform 300ms;
+  transform: translateY(0);
 }
 
-body.menu-expanded nav {
-  position: relative;
-}
 
 .menu ul:nth-child(1) {
   display: flex;
@@ -252,21 +294,21 @@ body.menu-expanded nav {
 }
 
 .menu .button {
-   background: #FFFFFF ;
-   border-radius: 40px;
-   font-weight: 700;
-   font-size: 18px;
-   line-height: 23px;
-   text-transform: uppercase;
-   text-decoration: none;
+  background: #ffffff;
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 23px;
+  text-transform: uppercase;
+  text-decoration: none;
 
-   color: var(--primary-color);
+  color: var(--primary-color);
 
-   display: inline-block;
-   padding: 16px 32px;
+  display: inline-block;
+  padding: 16px 32px;
 
-   margin-top: 4.8rem;
-   margin-bottom: 8rem;
+  margin-top: 4.8rem;
+  margin-bottom: 8rem;
 }
 
 .social-links {
@@ -290,4 +332,48 @@ body.menu-expanded .logo path {
 body.menu-expanded button path {
   /* COR DAS TRES LINHAS*/
   stroke: white;
+}
+
+/* ------- SERVICES --------- */
+
+/* PARA SE REFERIR A UM ID USAMOS O HASH (#)*/
+
+#services h2{
+  margin-bottom: 6rem;
+}
+#services .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+
+#services .card {
+  padding: 2.4rem;
+  text-align: left;
+
+  background: white;
+
+  border: 1px solid var(--brand-light);
+  border-radius: 0.6rem;
+}
+
+#services .card h3 {
+  margin-block: 1.6rem;
+}
+
+/* ------- ABOUT --------- */
+#about {
+  text-align: left;
+  background-color: var(--brand-beige);
+  
+
+}
+
+#about header h2{
+  margin-bottom: 2.4rem;
+}
+
+#about .content p{
+  margin-top: 2.4rem;
+  margin-bottom: 6rem;
 }
