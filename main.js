@@ -1,8 +1,27 @@
-function OnScroll() {
-  if (scrollY != 0) {
+// FUNÇÃO PARA RETIRAR O ERRO
+// AO INICIAR A PÁGINA ELA VAI EXECUTAR A FUNÇÃO WINDOW E VAI CHAMAR onScroll
+
+window.addEventListener('scroll', onScroll)
+
+onScroll()
+function onScroll() {
+  showNavOnScroll()
+  showBackToTopButtonOnScroll()
+}
+
+function showNavOnScroll() {
+  if (scrollY > 0) {
     navigation.classList.add('scroll')
   } else {
     navigation.classList.remove('scroll')
+  }
+}
+
+function showBackToTopButtonOnScroll() {
+  if (scrollY > 550) {
+    backToTopButton.classList.add('show')
+  } else {
+    backToTopButton.classList.remove('show')
   }
 }
 
